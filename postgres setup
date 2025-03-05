@@ -1,0 +1,13 @@
+-- Create a server, database and schema use the following code to create the table in which we will store the kafka msgs.
+CREATE SCHEMA IF NOT EXISTS schema1
+    AUTHORIZATION postgres;
+
+ALTER DEFAULT PRIVILEGES FOR ROLE postgres IN SCHEMA schema1
+GRANT ALL ON TABLES TO postgres;
+
+SET search_path TO schema1;
+CREATE TABLE kafka_logs (
+    id SERIAL PRIMARY KEY,
+    message TEXT NOT NULL,
+    received_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
+);
