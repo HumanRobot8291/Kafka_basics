@@ -1,0 +1,2 @@
+We are trying to use Kafka to transfer unstructed data as text for storing in a database for processing later on.
+This data pipeline test can help one get over the basic issues of data engineering a pipeline. And we can see many application for this work.
