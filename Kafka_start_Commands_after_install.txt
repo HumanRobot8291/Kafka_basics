@@ -13,4 +13,14 @@ kafka-server-start.bat C:\kafka\config\server.properties
 4) Create Kafka topic.
 kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
 
+5) Kafka producer command to add msgs to cmd for consumer
+First open a new terminal or cmd
+bin/kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
+
+6) kafka consumer command
+again open a new terminal or cmd
+bin/kafka-console-consumer.sh --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+
+
+
 
