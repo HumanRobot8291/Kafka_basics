@@ -15,11 +15,19 @@ kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 -
 
 5) Kafka producer command to add msgs to cmd for consumer
 First open a new terminal or cmd
+for terminal
 bin/kafka-console-producer.sh --topic test-topic --bootstrap-server localhost:9092
+for cmd
+kafka-console-producer.bat --topic test-topic --bootstrap-server localhost:9092
+
 
 6) kafka consumer command
 again open a new terminal or cmd
+for terminal
 bin/kafka-console-consumer.sh --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+for cmd
+kafka-console-consumer.bat --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+
 
 
 
