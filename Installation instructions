@@ -1,0 +1,124 @@
+Here’s how to install and run **Apache Kafka** on Windows. Windows does not support native bash commands like Linux/macOS, so we need to modify some steps.
+
+---
+
+## **1. Install Kafka on Windows (Without Docker)**  
+### **Step 1: Install Java**
+Kafka requires Java. Check if you have Java installed:
+```sh
+java -version
+```
+If not, install [Java JDK (LTS version)](https://www.oracle.com/java/technologies/javase-downloads.html).
+
+### **Step 2: Download Kafka**
+1. Go to the [Kafka Download Page](https://kafka.apache.org/downloads).
+2. Download the latest **binary version** (e.g., `kafka_2.13-3.6.0.tgz`).
+3. Extract the files using **7-Zip** or **WinRAR**.
+4. Move the extracted folder to a location like `C:\kafka`.
+
+### **Step 3: Start Zookeeper**
+1. Open **Command Prompt (cmd) as Administrator**.
+2. Navigate to Kafka’s `bin\windows` directory:
+   ```sh
+   cd C:\kafka\bin\windows
+   ```
+3. Start Zookeeper:
+   ```sh
+   zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
+   ```
+
+### **Step 4: Start Kafka Broker**
+Open **another Command Prompt**, then run:
+```sh
+cd C:\kafka\bin\windows
+kafka-server-start.bat C:\kafka\config\server.properties
+```
+
+### **Step 5: Create a Kafka Topic**
+Run the following command to create a topic named `test-topic`:
+```sh
+kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+```
+
+### **Step 6: Produce & Consume Messages**
+- **Producer** (Sends messages):
+  ```sh
+  kafka-console-producer.bat --topic test-topic --bootstrap-server localhost:9092
+  ```
+  Type some messages and press **Enter**.
+
+- **Consumer** (Reads messages):
+  ```sh
+  kafka-console-consumer.bat --topic test-topic --bootstrap-server localhost:9092 --from-beginning
+  ```
+
+---
+
+## **2. Install Kafka using Docker on Windows**
+If you use **Docker Desktop**, you can run Kafka using `docker-compose.yml`.
+
+### **Step 1: Install Docker Desktop**
+Download and install [Docker Desktop](https://www.docker.com/products/docker-desktop).
+
+### **Step 2: Enable WSL 2 (If Needed)**
+- Open PowerShell as Administrator and run:
+  ```sh
+  wsl --set-default-version 2
+  ```
+
+### **Step 3: Create `docker-compose.yml` File**
+1. Open **Notepad** and paste the following:
+   ```yaml
+   version: '3'
+   services:
+     zookeeper:
+       image: wurstmeister/zookeeper
+       container_name: zookeeper
+       ports:
+         - "2181:2181"
+
+     kafka:
+       image: wurstmeister/kafka
+       container_name: kafka
+       ports:
+         - "9092:9092"
+       environment:
+         KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://localhost:9092
+         KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+       depends_on:
+         - zookeeper
+   ```
+2. Save it as **`docker-compose.yml`** in a folder (e.g., `C:\kafka-docker`).
+
+### **Step 4: Start Kafka**
+1. Open **Command Prompt** and navigate to the folder:
+   ```sh
+   cd C:\kafka-docker
+   ```
+2. Run:
+   ```sh
+   docker-compose up -d
+   ```
+
+### **Step 5: Verify Kafka is Running**
+Run:
+```sh
+docker ps
+```
+You should see `kafka` and `zookeeper` containers running.
+
+---
+
+## **3. Recommended Kafka Tools for Data Engineering**
+| Tool | Purpose |
+|------|---------|
+| **Confluent Schema Registry** | Schema management for Kafka messages (Avro, JSON) |
+| **Apache Spark / Flink** | Real-time data processing with Kafka |
+| **Kafka Connect** | Integrates Kafka with databases (PostgreSQL, MySQL, MongoDB) |
+| **Prometheus + Grafana** | Kafka monitoring |
+| **ksqlDB** | SQL queries on Kafka topics |
+| **Airflow** | Orchestrates Kafka workflows |
+
+---
+
+Now you’re ready to use Kafka on **Windows**! Let me know if you need help. 🚀
