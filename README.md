@@ -1,5 +1,5 @@
 # Kafka_basics
-This shows  basic installation and use related commands
+We have Kafka to Postgres pipeline where JSON blobs are directed to various tables.
 # Steps to use this
 1) Follow Kafka installation instructions file.
 2) Follow Commands of kafka to start it and its relevant parts.
