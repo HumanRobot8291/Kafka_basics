@@ -1,0 +1,17 @@
+While installation we just download it and extract all file and store all bare file in C:\kafka folder
+
+while using the commands we use kafka\bin\windows folder, as it has all the file we need, and rest of the locations are handled by the direct paths given in the commands below:
+
+
+1) start kfka:-
+zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
+2) Start Kafka zookeeper
+C:\kafka\bin\windows\zookeeper-server-start.bat C:\kafka\config\zookeeper.properties
+3) Start Kafka brocker
+cd C:\kafka\bin\windows
+kafka-server-start.bat C:\kafka\config\server.properties
+
+4) Create Kafka topic.
+kafka-topics.bat --create --topic test-topic --bootstrap-server localhost:9092 --partitions 1 --replication-factor 1
+
+
